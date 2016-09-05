@@ -11,17 +11,17 @@ module Spreadsheet
       def client string, internal='UTF-16LE'
         string = string.dup
         string.force_encoding internal
-        string.encode Spreadsheet.client_encoding
+        string.encode Spreadsheet.client_encoding, {:invalid => :replace, :undef => :replace, :replace => '?'}
       end
       def internal string, client=Spreadsheet.client_encoding
         string = string.dup
         string.force_encoding client
-        string.encode('UTF-16LE').force_encoding('ASCII-8BIT')
+        string.encode('UTF-16LE', {:invalid => :replace, :undef => :replace, :replace => '?'}).force_encoding('ASCII-8BIT')
       end
       def utf8 string, client=Spreadsheet.client_encoding
         string = string.dup
         string.force_encoding client
-        string.encode('UTF-8')
+        string.encode('UTF-8', {:invalid => :replace, :undef => :replace, :replace => '?'})
       end
     else
       require 'iconv'
